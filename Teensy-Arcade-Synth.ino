@@ -118,8 +118,8 @@
 #include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioSynthWaveform       waveform1[3];      //xy=246.25399017333984,142.73016548156738
-AudioSynthWaveform       waveform2[3];      //xy=246.4285774230957,189.42858695983887
+AudioSynthWaveform       waveform1[3];
+AudioSynthWaveform       waveform2[3];
 AudioSynthWaveform       waveform3[3];
 AudioSynthWaveformDc     dc1[3];
 AudioEffectEnvelope      envelopeFilter1[3];
@@ -187,7 +187,7 @@ AudioConnection          patchCord126(mixerR, 0, i2s1, 1);
 AudioConnection          patchCord127(mixerL, 0, usb1, 0);
 AudioConnection          patchCord128(mixerR, 0, usb1, 1);
 
-AudioControlSGTL5000     sgt15000_1;     //xy=723.4444274902344,1167.7777881622314
+AudioControlSGTL5000     sgt15000_1;
 // GUItool: end automatically generated code
 
 LiquidCrystal_I2C lcd(0x27,20,4);
@@ -1789,124 +1789,27 @@ void checkNotes() {
             updateMenu();
         }else if (currentMenuState == ENVELOPES) {
               if (menuIndex == 0) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (attackAmp[0] > 999) {
-              //     lcd.print("Amp A   ");
-              // } else if (attackAmp[0] > 99) {
-              //     lcd.print("Amp A    ");
-              // } else if (attackAmp[0] > 9) {
-              //     lcd.print("Amp A     ");
-              // } else {
-              //     lcd.print("Amp A      ");
-              // }
-              // lcd.print(attackAmp[0]);
-
                 currentMenuState = AMP_A;
                 updateMenu();
           }else if (menuIndex == 1) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (decayAmp[0] > 999) {
-              //     lcd.print("Amp D   ");
-              // } else if (decayAmp[0] > 99) {
-              //     lcd.print("Amp D    ");
-              // } else if (decayAmp[0] > 9) {
-              //     lcd.print("Amp D     ");
-              // } else {
-              //     lcd.print("Amp D      ");
-              // }
-              // lcd.print(decayAmp[0]);
                 currentMenuState = AMP_D;
                 updateMenu();
           }else if (menuIndex == 2) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (sustainAmp[0] > 999) {
-              //     lcd.print("Amp S   ");
-              // } else if (sustainAmp[0] > 99) {
-              //     lcd.print("Amp S    ");
-              // } else if (sustainAmp[0] > 9) {
-              //     lcd.print("Amp S     ");
-              // } else {
-              //     lcd.print("Amp S      ");
-              // }
-              // lcd.print(sustainAmp[0]);
                 currentMenuState = AMP_S;
                 updateMenu();
           }else if (menuIndex == 3) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (releaseAmp[0] > 999) {
-              //     lcd.print("Amp R   ");
-              // } else if (releaseAmp[0] > 99) {
-              //     lcd.print("Amp R    ");
-              // } else if (releaseAmp[0] > 9) {
-              //     lcd.print("Amp R     ");
-              // } else {
-              //     lcd.print("Amp R      ");
-              // }
-              // lcd.print(releaseAmp[0]);
                 currentMenuState = AMP_R;
                 updateMenu();
           }else if (menuIndex == 4) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (attackFilter[0] > 999) {
-              //     lcd.print("Fltr A   ");
-              // } else if (attackFilter[0] > 99) {
-              //     lcd.print("Fltr A    ");
-              // } else if (attackFilter[0] > 9) {
-              //     lcd.print("Fltr A     ");
-              // } else {
-              //     lcd.print("Fltr A      ");
-              // }
-              // lcd.print(attackFilter[0]);
                 currentMenuState = FLTR_A;
                 updateMenu();
           }else if (menuIndex == 5) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (decayFilter[0] > 999) {
-              //     lcd.print("Fltr D   ");
-              // } else if (decayFilter[0] > 99) {
-              //     lcd.print("Fltr D    ");
-              // } else if (decayFilter[0] > 9) {
-              //     lcd.print("Fltr D     ");
-              // } else {
-              //     lcd.print("Fltr D      ");
-              // }
-              // lcd.print(decayFilter[0]);
                 currentMenuState = FLTR_D;
                 updateMenu();
           }else if (menuIndex == 6) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (sustainFilter[0] > 999) {
-              //     lcd.print("Fltr S   ");
-              // } else if (sustainFilter[0] > 99) {
-              //     lcd.print("Fltr S    ");
-              // } else if (sustainFilter[0] > 9) {
-              //     lcd.print("Fltr S     ");
-              // } else {
-              //     lcd.print("Fltr S      ");
-              // }
-              // lcd.print(sustainFilter[0]);
                 currentMenuState = FLTR_S;
                 updateMenu();
           }else if (menuIndex == 7) {
-              // lcd.print("Envelopes               ");
-              // lcd.setCursor(0,1);
-              // if (releaseFilter[0] > 999) {
-              //     lcd.print("Fltr R   ");
-              // } else if (releaseFilter[0] > 99) {
-              //     lcd.print("Fltr R    ");
-              // } else if (releaseFilter[0] > 9) {
-              //     lcd.print("Fltr R     ");
-              // } else {
-              //     lcd.print("Fltr R      ");
-              // }
-              // lcd.print(releaseFilter[0]);
                 currentMenuState = FLTR_R;
                 updateMenu();
           }
@@ -2737,11 +2640,6 @@ void oscChange(int osc) {
     lcd.setCursor(0,0);
     
     if (menuIndex == 0) {
-        //       string {WAVEFORM_SINE,
-            // WAVEFORM_SAWTOOTH,
-            // WAVEFORM_SQUARE,
-            // WAVEFORM_TRIANGLE,
-            // WAVEFORM_PULSE};
         lcd.print("Osc ");
         lcd.print(osc);
         lcd.print("       ");
