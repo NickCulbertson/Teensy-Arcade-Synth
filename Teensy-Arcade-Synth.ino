@@ -1,4 +1,4 @@
-//Notes
+// Notes
 #define NOTE_C0 (16.35)
 #define NOTE_CS0 (17.32)
 #define NOTE_D0 (18.35)
@@ -190,8 +190,6 @@ AudioConnection          patchCord128(mixerR, 0, usb1, 1);
 AudioControlSGTL5000     sgt15000_1;
 // GUItool: end automatically generated code
 
-LiquidCrystal_I2C lcd(0x27,20,4);
-
 enum MenuState {
     PARENT_MENU,
     PRESETS,
@@ -222,6 +220,8 @@ enum MenuState {
 };
 
 MenuState currentMenuState = PARENT_MENU;
+
+LiquidCrystal_I2C lcd(0x27,20,4);
 
 float myFreq = 80;
 int voices = 3;
@@ -263,9 +263,9 @@ float pulseWidth[3] = {0.25, 0.25, 0.25};
 
 int noteArray[8];
 int notePlaying = 0;
-
 int presetSelected = 0;
-Bounce button1 = Bounce(1, 15);  // 15 ms debounce time
+
+Bounce button1 = Bounce(1, 15);
 Bounce button2 = Bounce(22, 15);
 Bounce button3 = Bounce(2, 15);
 Bounce button4 = Bounce(5, 15);
@@ -276,15 +276,13 @@ Bounce button8 = Bounce(4, 15);
 Bounce button14 = Bounce(14, 15);
 Encoder knob(16, 17);
 
-// Define variables to track button state and timing
-const unsigned long debounceDelay = 50;    // Debounce delay in milliseconds
-const unsigned long doubleTapWindow = 300; // Window for double tap detection in milliseconds
+const unsigned long debounceDelay = 50;
+const unsigned long doubleTapWindow = 300;
 
-// Variables to manage button state and timing
-int buttonState = LOW;            // Current state of the button
-int lastButtonState = LOW;        // Previous state of the button
-unsigned long lastDebounceTime = 0;  // Last time the button state was toggled
-unsigned long lastTapTime = 0;       // Last time a tap was registered
+int buttonState = LOW;
+int lastButtonState = LOW;
+unsigned long lastDebounceTime = 0; 
+unsigned long lastTapTime = 0; 
 
 bool tapDetected = false;
 bool doubleTapDetected = false;
@@ -328,16 +326,14 @@ void presetSelect() {
     if (menuIndex < 0) {
         menuIndex = 9;
     }
-    
     if (menuIndex > 9) {
         menuIndex = 0;
     }
-    
     presetSelected = menuIndex;
-    
     if (menuIndex == 0) {
         // Bass
         octave =  2.0;
+
         cents[0] = 5;
         cents[1] = -5;
         cents[2] = 0;
@@ -813,19 +809,19 @@ void presetSelect() {
         cents[0] = 0;
         cents[1] = 0;
         cents[2] = 0;
-        
+
         semitones[0] = 0;
         semitones[1] = 0;
         semitones[2] = 12;
-        
+
         pan[0] = -100;
         pan[1] = 100;
         pan[2] = 0;
-        
+
         volume[0] = 100;
         volume[1] = 100;
         volume[2] = 10;
-        
+
         attackAmp[0] = 0;
         attackAmp[1] = 0;
         attackAmp[2] = 0;
@@ -838,7 +834,7 @@ void presetSelect() {
         releaseAmp[0] = 100;
         releaseAmp[1] = 100;
         releaseAmp[2] = 100;
-        
+
         attackFilter[0] = 0;
         attackFilter[1] = 0;
         attackFilter[2] = 0;
@@ -851,7 +847,7 @@ void presetSelect() {
         releaseFilter[0] = 100;
         releaseFilter[1] = 100;
         releaseFilter[2] = 100;
-        
+
         cutoff[0] = 2000;
         cutoff[1] = 2000;
         cutoff[2] = 2000;
@@ -861,7 +857,7 @@ void presetSelect() {
         filterAmount[0] = 2.5;
         filterAmount[1] = 2.5;
         filterAmount[2] = 2.5;
-        
+
         waveforms[0] = 1;
         waveforms[1] = 1;
         waveforms[2] = 1;
@@ -871,19 +867,19 @@ void presetSelect() {
         cents[0] = 5;
         cents[1] = -5;
         cents[2] = 0;
-        
+
         semitones[0] = 7;
         semitones[1] = 0;
         semitones[2] = -12;
-        
+
         pan[0] = -50;
         pan[1] = 50;
         pan[2] = 0;
-        
+
         volume[0] = 100;
         volume[1] = 100;
         volume[2] = 100;
-        
+
         attackAmp[0] = 400;
         attackAmp[1] = 400;
         attackAmp[2] = 400;
@@ -896,7 +892,7 @@ void presetSelect() {
         releaseAmp[0] = 10;
         releaseAmp[1] = 10;
         releaseAmp[2] = 10;
-        
+
         attackFilter[0] = 800;
         attackFilter[1] = 800;
         attackFilter[2] = 800;
@@ -909,7 +905,7 @@ void presetSelect() {
         releaseFilter[0] = 10;
         releaseFilter[1] = 10;
         releaseFilter[2] = 10;
-        
+
         cutoff[0] = 1000;
         cutoff[1] = 1000;
         cutoff[2] = 1000;
@@ -919,12 +915,11 @@ void presetSelect() {
         filterAmount[0] = 1.5;
         filterAmount[1] = 1.5;
         filterAmount[2] = 1.5;
-        
+
         waveforms[0] = 0;
         waveforms[1] = 0;
         waveforms[2] = 0;
     }
-    
     updateVals();
     presetChange();
 }
@@ -1013,70 +1008,62 @@ void updateVals() {
         envelope1[i].decay(decayAmp[i]);
         envelope1[i].sustain(sustainAmp[i]);
         envelope1[i].release(releaseAmp[i]);
-        
         envelope2[i].attack(attackAmp[i]);
         envelope2[i].decay(decayAmp[i]);
         envelope2[i].sustain(sustainAmp[i]);
         envelope2[i].release(releaseAmp[i]);
-        
         envelopeFilter1[i].attack(attackFilter[i]);
         envelopeFilter1[i].decay(decayFilter[i]);
         envelopeFilter1[i].sustain(sustainFilter[i]);
         envelopeFilter1[i].release(releaseFilter[i]);
-        
         if(waveforms[0]==0) {
             waveform1[i].begin(waveformsArray[0]);
-        }else if(waveforms[0]==1) {
+        } else if(waveforms[0]==1) {
             waveform1[i].begin(waveformsArray[1]);
-        }else if(waveforms[0]==2) {
+        } else if(waveforms[0]==2) {
             waveform1[i].begin(waveformsArray[2]);
-        }else if(waveforms[0]==3) {
+        } else if(waveforms[0]==3) {
             waveform1[i].begin(waveformsArray[3]);
-        }else if(waveforms[0]==4) {
+        } else if(waveforms[0]==4) {
             waveform1[i].begin(waveformsArray[4]);
         }
         waveform1[i].amplitude(1.0);
         waveform1[i].pulseWidth(pulseWidth[0]);
-        
         if(waveforms[1]==0) {
             waveform2[i].begin(waveformsArray[0]);
-        }else if(waveforms[1]==1) {
+        } else if(waveforms[1]==1) {
             waveform2[i].begin(waveformsArray[1]);
-        }else if(waveforms[1]==2) {
+        } else if(waveforms[1]==2) {
             waveform2[i].begin(waveformsArray[2]);
-        }else if(waveforms[1]==3) {
+        } else if(waveforms[1]==3) {
             waveform2[i].begin(waveformsArray[3]);
-        }else if(waveforms[1]==4) {
+        } else if(waveforms[1]==4) {
             waveform2[i].begin(waveformsArray[4]);
         }
         waveform2[i].amplitude(1.0);
         waveform2[i].pulseWidth(pulseWidth[1]);
-        
         if(waveforms[2]==0) {
             waveform3[i].begin(waveformsArray[0]);
-        }else if(waveforms[2]==1) {
+        } else if(waveforms[2]==1) {
             waveform3[i].begin(waveformsArray[1]);
-        }else if(waveforms[2]==2) {
+        } else if(waveforms[2]==2) {
             waveform3[i].begin(waveformsArray[2]);
-        }else if(waveforms[2]==3) {
+        } else if(waveforms[2]==3) {
             waveform3[i].begin(waveformsArray[3]);
-        }else if(waveforms[2]==4) {
+        } else if(waveforms[2]==4) {
             waveform3[i].begin(waveformsArray[4]);
         }
         waveform3[i].amplitude(1.0);
         waveform3[i].pulseWidth(pulseWidth[2]);
-        
-        ladder1[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-        ladder1[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+        ladder1[i].frequency(cutoff[i]);
+        ladder1[i].octaveControl(filterAmount[i]);
         ladder1[i].resonance(resonance[i]);
-        ladder2[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-        ladder2[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+        ladder2[i].frequency(cutoff[i]);
+        ladder2[i].octaveControl(filterAmount[i]);
         ladder2[i].resonance(resonance[i]);
-        
         mixer1[i].gain(0, max(0, (-pan[0]+100.0) * 0.005) * (volume[0]/100.0) * 0.33);
         mixer1[i].gain(1, max(0, (-pan[1]+100.0) * 0.005) * (volume[1]/100.0) * 0.33);
         mixer1[i].gain(2, max(0, (-pan[2]+100.0) * 0.005) * (volume[2]/100.0) * 0.33);
-        
         mixer2[i].gain(0, max(0, (pan[0]+100.0) * 0.005) * (volume[0]/100.0) * 0.33);
         mixer2[i].gain(1, max(0, (pan[1]+100.0) * 0.005) * (volume[1]/100.0) * 0.33);
         mixer2[i].gain(2, max(0, (pan[2]+100.0) * 0.005) * (volume[2]/100.0) * 0.33);
@@ -1087,16 +1074,12 @@ void menuChange() {
     if (menuIndex < 0) {
         menuIndex = 8;
     }
-    
     if (menuIndex > 8) {
         menuIndex = 0;
     }
-    
-    // lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Menu            ");
     lcd.setCursor(0,1);
-    
     if (menuIndex == 0) {
         lcd.print("Presets            ");
     } else if (menuIndex == 1) {
@@ -1133,7 +1116,6 @@ void menuChange() {
 void playSound(int note) {
     stopSound(note);
     myFreq = notesArray[note];
-    
     notePlaying += 1;
     if (notePlaying >= voices) {
         notePlaying = 0;
@@ -1144,7 +1126,6 @@ void playSound(int note) {
     waveform1[notePlaying].frequency(notesArray[note + semitones[0]] * pow(2, cents[0] / 1200.0) * pow(2, random(-2, 3) / 1200.0));
     waveform2[notePlaying].frequency(notesArray[note + semitones[1]] * pow(2, cents[1] / 1200.0) * pow(2, random(-2, 3) / 1200.0));
     waveform3[notePlaying].frequency(notesArray[note + semitones[2]] * pow(2, cents[2] / 1200.0) * pow(2, random(-2, 3) / 1200.0));
-    
     envelope1[notePlaying].noteOn();
     envelope2[notePlaying].noteOn();
     envelopeFilter1[notePlaying].noteOn();
@@ -1787,29 +1768,29 @@ void checkNotes() {
                 currentMenuState = SCALE;
             }
             updateMenu();
-        }else if (currentMenuState == ENVELOPES) {
+        } else if (currentMenuState == ENVELOPES) {
               if (menuIndex == 0) {
                 currentMenuState = AMP_A;
                 updateMenu();
-          }else if (menuIndex == 1) {
+          } else if (menuIndex == 1) {
                 currentMenuState = AMP_D;
                 updateMenu();
-          }else if (menuIndex == 2) {
+          } else if (menuIndex == 2) {
                 currentMenuState = AMP_S;
                 updateMenu();
-          }else if (menuIndex == 3) {
+          } else if (menuIndex == 3) {
                 currentMenuState = AMP_R;
                 updateMenu();
-          }else if (menuIndex == 4) {
+          } else if (menuIndex == 4) {
                 currentMenuState = FLTR_A;
                 updateMenu();
-          }else if (menuIndex == 5) {
+          } else if (menuIndex == 5) {
                 currentMenuState = FLTR_D;
                 updateMenu();
-          }else if (menuIndex == 6) {
+          } else if (menuIndex == 6) {
                 currentMenuState = FLTR_S;
                 updateMenu();
-          }else if (menuIndex == 7) {
+          } else if (menuIndex == 7) {
                 currentMenuState = FLTR_R;
                 updateMenu();
           }
@@ -1895,16 +1876,16 @@ void checkNotes() {
             if (menuIndex == 0) {
                 currentMenuState = WAVEFORMS;
                 updateMenu();
-            }else if (menuIndex == 1) {
+            } else if (menuIndex == 1) {
                 currentMenuState = VOLUME;
                 updateMenu();
-            }else if (menuIndex == 2) {
+            } else if (menuIndex == 2) {
                 currentMenuState = SEMITONES;
                 updateMenu();
-            }else if (menuIndex == 3) {
+            } else if (menuIndex == 3) {
                 currentMenuState = DETUNE;
                 updateMenu();
-            }else if (menuIndex == 4) {
+            } else if (menuIndex == 4) {
                 currentMenuState = PAN;
                 updateMenu();
             }
@@ -1916,25 +1897,7 @@ void checkNotes() {
             } else if (currentOsc == 3) {
                 currentMenuState = OSC_3;
             }
-            // lcd.setCursor(0,0);
-            // lcd.print("Osc ");
-            // lcd.print(currentOsc);
-            // lcd.print("              ");
-            // lcd.setCursor(0,1);
-            // lcd.print("Waveform     ");
-            // if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[0]) {
-            //     lcd.print("Saw");
-            // } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[1]) {
-            //     lcd.print("Pls");
-            // } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[2]) {
-            //     lcd.print("Sqr");
-            // } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[3]) {
-            //     lcd.print("Tri");
-            // } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[4]) {
-            //     lcd.print("Sin");
-            // }
-
-                updateMenu();
+            updateMenu();
             menuIndex = 0;
         } else {
             presetSelect();
@@ -1949,9 +1912,7 @@ void checkNotes() {
         doubleTapDetected = false;
         lastTapTime = 0;
     }
-    
     lastButtonState = reading;
-    
     
     // Handle Encoder Turn
     long newKnobVal;
@@ -1961,7 +1922,7 @@ void checkNotes() {
             next();
             oldKnobVal = newKnobVal;
             knob.write(oldKnobVal);
-        }else if (newKnobVal < oldKnobVal - 1) {
+        } else if (newKnobVal < oldKnobVal - 1) {
             previous();
             oldKnobVal = newKnobVal;
             knob.write(oldKnobVal);
@@ -1996,40 +1957,36 @@ void updateKnob(bool next) {
         } else {
             waveforms[currentOsc-1] =  max(0, waveforms[currentOsc-1]-1);
         }
-        
-        // if (currentOsc == 1) {
-            waveform1[0].begin(waveformsArray[waveforms[currentOsc-1]]);
-            waveform1[1].begin(waveformsArray[waveforms[currentOsc-1]]);
-            waveform1[2].begin(waveformsArray[waveforms[currentOsc-1]]);
-            // } else if (currentOsc == 2) {
-                waveform2[0].begin(waveformsArray[waveforms[currentOsc-1]]);
-                waveform2[1].begin(waveformsArray[waveforms[currentOsc-1]]);
-                waveform2[2].begin(waveformsArray[waveforms[currentOsc-1]]);
-                // } else if (currentOsc == 3) {
-                    waveform3[0].begin(waveformsArray[waveforms[currentOsc-1]]);
-                    waveform3[1].begin(waveformsArray[waveforms[currentOsc-1]]);
-                    waveform3[2].begin(waveformsArray[waveforms[currentOsc-1]]);
-                    // }
+        waveform1[0].begin(waveformsArray[waveforms[currentOsc-1]]);
+        waveform1[1].begin(waveformsArray[waveforms[currentOsc-1]]);
+        waveform1[2].begin(waveformsArray[waveforms[currentOsc-1]]);
+
+        waveform2[0].begin(waveformsArray[waveforms[currentOsc-1]]);
+        waveform2[1].begin(waveformsArray[waveforms[currentOsc-1]]);
+        waveform2[2].begin(waveformsArray[waveforms[currentOsc-1]]);
+
+        waveform3[0].begin(waveformsArray[waveforms[currentOsc-1]]);
+        waveform3[1].begin(waveformsArray[waveforms[currentOsc-1]]);
+        waveform3[2].begin(waveformsArray[waveforms[currentOsc-1]]);
                 
-                
-                lcd.setCursor(0,0);
-                lcd.print("Osc ");
-                lcd.print(currentOsc);
-                lcd.print("          ");
-                lcd.setCursor(0,1);
-                lcd.print("Waveform   [");
-                if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[0]) {
-                    lcd.print("Saw");
-                } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[1]) {
-                    lcd.print("Pls");
-                } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[2]) {
-                    lcd.print("Sqr");
-                } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[3]) {
-                    lcd.print("Tri");
-                } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[4]) {
-                    lcd.print("Sin");
-                }
-                lcd.print("]");
+        lcd.setCursor(0,0);
+        lcd.print("Osc ");
+        lcd.print(currentOsc);
+        lcd.print("          ");
+        lcd.setCursor(0,1);
+        lcd.print("Waveform   [");
+        if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[0]) {
+            lcd.print("Saw");
+        } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[1]) {
+            lcd.print("Pls");
+        } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[2]) {
+            lcd.print("Sqr");
+        } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[3]) {
+            lcd.print("Tri");
+        } else if (waveformsArray[waveforms[currentOsc-1]] == waveformsArray[4]) {
+            lcd.print("Sin");
+        }
+        lcd.print("]");
     } else if (currentMenuState == VOLUME) {
         if (next == true) {
             volume[currentOsc-1] =  min(200,  volume[currentOsc-1]+10);
@@ -2040,7 +1997,6 @@ void updateKnob(bool next) {
             mixer1[i].gain(currentOsc-1, max(0, (-pan[currentOsc-1]+100.0) * 0.005) * (volume[currentOsc-1]/100.0) * 0.33);
             mixer2[i].gain(currentOsc-1, max(0, (pan[currentOsc-1]+100.0) * 0.005) * (volume[currentOsc-1]/100.0) * 0.33);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Osc ");
         lcd.print(currentOsc);
@@ -2061,8 +2017,6 @@ void updateKnob(bool next) {
         } else {
             semitones[currentOsc-1] =  max(-12,  semitones[currentOsc-1]-1);
         }
-        
-        
         lcd.setCursor(0,0);
         lcd.print("Osc ");
         lcd.print(currentOsc);
@@ -2079,17 +2033,16 @@ void updateKnob(bool next) {
         }
         lcd.print(semitones[currentOsc-1]);
         lcd.print("]");
-    }  else if (currentMenuState == AMP_A) {
+    } else if (currentMenuState == AMP_A) {
         if (next == true) {
             attackAmp[0] =  min(9000,  attackAmp[0] + 100);
             attackAmp[1] =  min(9000,  attackAmp[1] + 100);
             attackAmp[2] =  min(9000,  attackAmp[2] + 100);
-        }else {
+        } else {
             attackAmp[0] =  max(0,  attackAmp[0] - 100);
             attackAmp[1] =  max(0,  attackAmp[1] - 100);
             attackAmp[2] =  max(0,  attackAmp[2] - 100);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2106,7 +2059,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2121,17 +2073,16 @@ void updateKnob(bool next) {
         }
         lcd.print(attackAmp[0]);
         lcd.print("]");
-    }  else if (currentMenuState == AMP_D) {
+    } else if (currentMenuState == AMP_D) {
         if (next == true) {
             decayAmp[0] =  min(9000,  decayAmp[0] + 100);
             decayAmp[1] =  min(9000,  decayAmp[1] + 100);
             decayAmp[2] =  min(9000,  decayAmp[2] + 100);
-        }else {
+        } else {
             decayAmp[0] =  max(0,  decayAmp[0] - 100);
             decayAmp[1] =  max(0,  decayAmp[1] - 100);
             decayAmp[2] =  max(0,  decayAmp[2] - 100);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2148,7 +2099,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2163,17 +2113,16 @@ void updateKnob(bool next) {
         }
         lcd.print(decayAmp[0]);
         lcd.print("]");
-    }  else if (currentMenuState == AMP_S) {
+    } else if (currentMenuState == AMP_S) {
         if (next == true) {
             sustainAmp[0] =  min(1.0,  sustainAmp[0] + 0.1);
             sustainAmp[1] =  min(1.0,  sustainAmp[1] + 0.1);
             sustainAmp[2] =  min(1.0,  sustainAmp[2] + 0.1);
-        }else {
+        } else {
             sustainAmp[0] =  max(0,  sustainAmp[0] - 0.1);
             sustainAmp[1] =  max(0,  sustainAmp[1] - 0.1);
             sustainAmp[2] =  max(0,  sustainAmp[2] - 0.1);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2190,7 +2139,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2205,17 +2153,16 @@ void updateKnob(bool next) {
         }
         lcd.print(sustainAmp[0]);
         lcd.print("]");
-    }  else if (currentMenuState == AMP_R) {
+    } else if (currentMenuState == AMP_R) {
         if (next == true) {
             releaseAmp[0] =  min(9000,  releaseAmp[0] + 100);
             releaseAmp[1] =  min(9000,  releaseAmp[1] + 100);
             releaseAmp[2] =  min(9000,  releaseAmp[2] + 100);
-        }else {
+        } else {
             releaseAmp[0] =  max(0,  releaseAmp[0] - 100);
             releaseAmp[1] =  max(0,  releaseAmp[1] - 100);
             releaseAmp[2] =  max(0,  releaseAmp[2] - 100);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2232,7 +2179,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2247,17 +2193,16 @@ void updateKnob(bool next) {
         }
         lcd.print(releaseAmp[0]);
         lcd.print("]");
-    }  else if (currentMenuState == FLTR_A) {
+    } else if (currentMenuState == FLTR_A) {
         if (next == true) {
             attackFilter[0] =  min(9000,  attackFilter[0] + 100);
             attackFilter[1] =  min(9000,  attackFilter[1] + 100);
             attackFilter[2] =  min(9000,  attackFilter[2] + 100);
-        }else {
+        } else {
             attackFilter[0] =  max(0,  attackFilter[0] - 100);
             attackFilter[1] =  max(0,  attackFilter[1] - 100);
             attackFilter[2] =  max(0,  attackFilter[2] - 100);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2274,7 +2219,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2289,17 +2233,16 @@ void updateKnob(bool next) {
         }
         lcd.print(attackFilter[0]);
         lcd.print("]");
-    }  else if (currentMenuState == FLTR_D) {
+    } else if (currentMenuState == FLTR_D) {
         if (next == true) {
             decayFilter[0] =  min(9000,  decayFilter[0] + 100);
             decayFilter[1] =  min(9000,  decayFilter[1] + 100);
             decayFilter[2] =  min(9000,  decayFilter[2] + 100);
-        }else {
+        } else {
             decayFilter[0] =  max(0,  decayFilter[0] - 100);
             decayFilter[1] =  max(0,  decayFilter[1] - 100);
             decayFilter[2] =  max(0,  decayFilter[2] - 100);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2316,7 +2259,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2331,17 +2273,16 @@ void updateKnob(bool next) {
         }
         lcd.print(decayFilter[0]);
         lcd.print("]");
-    }  else if (currentMenuState == FLTR_S) {
+    } else if (currentMenuState == FLTR_S) {
         if (next == true) {
             sustainFilter[0] =  min(1.0,  sustainFilter[0] + 0.1);
             sustainFilter[1] =  min(1.0,  sustainFilter[1] + 0.1);
             sustainFilter[2] =  min(1.0,  sustainFilter[2] + 0.1);
-        }else {
+        } else {
             sustainFilter[0] =  max(0,  sustainFilter[0] - 0.1);
             sustainFilter[1] =  max(0,  sustainFilter[1] - 0.1);
             sustainFilter[2] =  max(0,  sustainFilter[2] - 0.1);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2358,7 +2299,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2373,17 +2313,16 @@ void updateKnob(bool next) {
         }
         lcd.print(sustainFilter[0]);
         lcd.print("]");
-    }  else if (currentMenuState == FLTR_R) {
+    } else if (currentMenuState == FLTR_R) {
         if (next == true) {
             releaseFilter[0] =  min(9000,  releaseFilter[0] + 100);
             releaseFilter[1] =  min(9000,  releaseFilter[1] + 100);
             releaseFilter[2] =  min(9000,  releaseFilter[2] + 100);
-        }else {
+        } else {
             releaseFilter[0] =  max(0,  releaseFilter[0] - 100);
             releaseFilter[1] =  max(0,  releaseFilter[1] - 100);
             releaseFilter[2] =  max(0,  releaseFilter[2] - 100);
         }
-        
         for (int i = 0; i < 3; i++) {
             envelope1[i].attack(attackAmp[i]);
             envelope1[i].decay(decayAmp[i]);
@@ -2400,7 +2339,6 @@ void updateKnob(bool next) {
             envelopeFilter1[i].sustain(sustainFilter[i]);
             envelopeFilter1[i].release(releaseFilter[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2415,16 +2353,12 @@ void updateKnob(bool next) {
         }
         lcd.print(releaseFilter[0]);
         lcd.print("]");
-    }
-    
-    else if (currentMenuState == DETUNE) {
+    } else if (currentMenuState == DETUNE) {
         if (next == true) {
             cents[currentOsc-1] =  min(100,  cents[currentOsc-1]+1);
         } else {
             cents[currentOsc-1] =  max(-100,  cents[currentOsc-1]-1);
         }
-        
-        
         lcd.setCursor(0,0);
         lcd.print("Osc ");
         lcd.print(currentOsc);
@@ -2451,12 +2385,10 @@ void updateKnob(bool next) {
         } else {
             pan[currentOsc-1] =  max(-100,  pan[currentOsc-1]-10);
         }
-        
         for (int i = 0; i < 3; i++) {
             mixer1[i].gain(currentOsc-1, max(0, (-pan[currentOsc-1]+100.0) * 0.005) * (volume[currentOsc-1]/100.0) * 0.33);
             mixer2[i].gain(currentOsc-1, max(0, (pan[currentOsc-1]+100.0) * 0.005) * (volume[currentOsc-1]/100.0) * 0.33);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Osc ");
         lcd.print(currentOsc);
@@ -2486,21 +2418,19 @@ void updateKnob(bool next) {
             cutoff[0] =  min(10000,  cutoff[0]+100);
             cutoff[1] =  min(10000,  cutoff[1]+100);
             cutoff[2] =  min(10000,  cutoff[2]+100);
-        }else {
+        } else {
             cutoff[0] =  max(0,  cutoff[0]-100);
             cutoff[1] =  max(0,  cutoff[1]-100);
             cutoff[2] =  max(0,  cutoff[2]-100);
         }
-        
         for (int i = 0; i < 3; i++) {
-            ladder1[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-            ladder1[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+            ladder1[i].frequency(cutoff[i]);
+            ladder1[i].octaveControl(filterAmount[i]);
             ladder1[i].resonance(resonance[i]);
-            ladder2[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-            ladder2[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+            ladder2[i].frequency(cutoff[i]);
+            ladder2[i].octaveControl(filterAmount[i]);
             ladder2[i].resonance(resonance[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Filter               ");
         lcd.setCursor(0,1);
@@ -2517,36 +2447,30 @@ void updateKnob(bool next) {
         }
         lcd.print(cutoff[0]);
         lcd.print("]");
-        
-        
     } else if (currentMenuState == RESONANCE) {
         if (next == true) {
             resonance[0] =  min(3.0,  resonance[0]+0.1);
             resonance[1] =  min(3.0,  resonance[1]+0.1);
             resonance[2] =  min(3.0,  resonance[2]+0.1);
-        }else {
+        } else {
             resonance[0] =  max(0,  resonance[0]-0.1);
             resonance[1] =  max(0,  resonance[1]-0.1);
             resonance[2] =  max(0,  resonance[2]-0.1);
         }
-        
         for (int i = 0; i < 3; i++) {
-            ladder1[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-            ladder1[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+            ladder1[i].frequency(cutoff[i]);
+            ladder1[i].octaveControl(filterAmount[i]);
             ladder1[i].resonance(resonance[i]);
-            ladder2[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-            ladder2[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+            ladder2[i].frequency(cutoff[i]);
+            ladder2[i].octaveControl(filterAmount[i]);
             ladder2[i].resonance(resonance[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Filter               ");
         lcd.setCursor(0,1);
         lcd.print("Resonance [");
         lcd.print(resonance[0]);
         lcd.print("]");
-        
-        
     } else if (currentMenuState == FILTER_AMOUNT) {
         if (next == true) {
             filterAmount[0] =  min(5.0,  filterAmount[0]+0.1);
@@ -2557,32 +2481,26 @@ void updateKnob(bool next) {
             filterAmount[1] =  max(0,  filterAmount[1]-0.1);
             filterAmount[2] =  max(0,  filterAmount[2]-0.1);
         }
-        
         for (int i = 0; i < 3; i++) {
-            ladder1[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-            ladder1[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+            ladder1[i].frequency(cutoff[i]);
+            ladder1[i].octaveControl(filterAmount[i]);
             ladder1[i].resonance(resonance[i]);
-            ladder2[i].frequency(cutoff[i]);     // 20.0 to 18000 Cutoff
-            ladder2[i].octaveControl(filterAmount[i]);    // 0.0 to 7.0    Amount of Filter
+            ladder2[i].frequency(cutoff[i]);
+            ladder2[i].octaveControl(filterAmount[i]);
             ladder2[i].resonance(resonance[i]);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Filter               ");
         lcd.setCursor(0,1);
         lcd.print("Env Amount[");
         lcd.print(filterAmount[0]);
         lcd.print("]");
-        
-        
     } else if (currentMenuState == OCTAVE) {
-        // octaveChange();
         if (next == true) {
             octave =  min(7,  octave+1);
         }else {
             octave =  max(0,  octave-1);
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Menu               ");
         lcd.setCursor(0,1);
@@ -2593,7 +2511,7 @@ void updateKnob(bool next) {
         if (next == true) {
             transpose =  min(12,  transpose+1);
             
-        }else {
+        } else {
             transpose =  max(-12,  transpose-1);
         }
         lcd.setCursor(0,0);
@@ -2608,15 +2526,12 @@ void updateKnob(bool next) {
         }
         lcd.print(transpose);
         lcd.print("]");
-        
     } else if (currentMenuState == SCALE) {
-        // octaveChange();
         if (scale == 0) {
             scale = 1;
-        }else {
+        } else {
             scale = 0;
         }
-        
         lcd.setCursor(0,0);
         lcd.print("Menu               ");
         lcd.setCursor(0,1);
@@ -2632,13 +2547,10 @@ void oscChange(int osc) {
     if (menuIndex < 0) {
         menuIndex = 4;
     }
-    
     if (menuIndex > 4) {
         menuIndex = 0;
     }
-    
     lcd.setCursor(0,0);
-    
     if (menuIndex == 0) {
         lcd.print("Osc ");
         lcd.print(osc);
@@ -2732,7 +2644,6 @@ void envelopesChange() {
         menuIndex = 0;
     }
     lcd.setCursor(0,0);
-    
     if (menuIndex == 0) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2746,7 +2657,6 @@ void envelopesChange() {
             lcd.print("Amp A          ");
         }
         lcd.print(attackAmp[0]);
-        
     } else if (menuIndex == 1) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2760,13 +2670,11 @@ void envelopesChange() {
             lcd.print("Amp D          ");
         }
         lcd.print(decayAmp[0]);
-        
     } else if (menuIndex == 2) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
         lcd.print("Amp S        ");
         lcd.print(sustainAmp[0]);
-        
     } else if (menuIndex == 3) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2780,7 +2688,6 @@ void envelopesChange() {
             lcd.print("Amp R          ");
         }
         lcd.print(releaseAmp[0]);
-        
     } else if (menuIndex == 4) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2794,7 +2701,6 @@ void envelopesChange() {
             lcd.print("Fltr A         ");
         }
         lcd.print(attackFilter[0]);
-        
     } else if (menuIndex == 5) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2808,7 +2714,6 @@ void envelopesChange() {
             lcd.print("Fltr D         ");
         }
         lcd.print(decayFilter[0]);
-        
     } else if (menuIndex == 6) {
         lcd.print("Envelopes               ");
         lcd.setCursor(0,1);
@@ -2834,13 +2739,10 @@ void filterChange() {
     if (menuIndex < 0) {
         menuIndex = 2;
     }
-    
     if (menuIndex > 2) {
         menuIndex = 0;
     }
-    
     lcd.setCursor(0,0);
-    
     if (menuIndex == 0) {
         lcd.print("Filter                 ");
         lcd.setCursor(0,1);
