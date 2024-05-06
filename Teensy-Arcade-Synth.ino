@@ -265,14 +265,14 @@ int noteArray[8];
 int notePlaying = 0;
 int presetSelected = 0;
 
-Bounce button1 = Bounce(1, 15);
-Bounce button2 = Bounce(22, 15);
+Bounce button1 = Bounce(0, 15);
+Bounce button2 = Bounce(1, 15);
 Bounce button3 = Bounce(2, 15);
-Bounce button4 = Bounce(5, 15);
-Bounce button5 = Bounce(9, 15);
-Bounce button6 = Bounce(0, 15);
-Bounce button7 = Bounce(3, 15);
-Bounce button8 = Bounce(4, 15);
+Bounce button4 = Bounce(3, 15);
+Bounce button5 = Bounce(4, 15);
+Bounce button6 = Bounce(5, 15);
+Bounce button7 = Bounce(9, 15);
+Bounce button8 = Bounce(22, 15);
 Bounce button14 = Bounce(14, 15);
 Encoder knob(16, 17);
 
