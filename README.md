@@ -1,7 +1,7 @@
 # Teensy Arcade Synth
 (Click the image to watch DIY Teensy Arcade Synth | Tutorial & Presets Demo)
 
-[![DIY Teensy Arcade Synth | Tutorial & Presets Demo](https://img.youtube.com/vi/sXtFZuuaZ8I/0.jpg)](https://youtu.be/sXtFZuuaZ8I"DIY Teensy Arcade Synth | Tutorial & Presets Demo")
+[![DIY Teensy Arcade Synth | Tutorial & Presets Demo](https://img.youtube.com/vi/sXtFZuuaZ8I/0.jpg)](https://youtu.be/sXtFZuuaZ8I "DIY Teensy Arcade Synth | Tutorial & Presets Demo")
 
 https://youtu.be/sXtFZuuaZ8I?si=uku8ubKHjdsXcVE_
 
