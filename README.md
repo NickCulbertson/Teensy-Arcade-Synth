@@ -1,6 +1,7 @@
 # Teensy Arcade Synth
 3-layer polyphonic synthesizer made with Teensy using arcade buttons, encoder &amp; LCD screen all stuffed into a cigar box. The Teensy is the ultimate microcontroller for audio. Follow the steps in the video to get started making your own Teensy Arcade Synth!
 
+## Tutorial & Demo
 (Click the image to watch DIY Teensy Arcade Synth | Tutorial & Presets Demo)
 
 [![DIY Teensy Arcade Synth | Tutorial & Presets Demo](https://img.youtube.com/vi/sXtFZuuaZ8I/0.jpg)](https://youtu.be/sXtFZuuaZ8I "DIY Teensy Arcade Synth | Tutorial & Presets Demo")
