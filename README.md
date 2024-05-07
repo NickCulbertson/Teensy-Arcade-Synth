@@ -3,6 +3,4 @@
 
 [![DIY Teensy Arcade Synth | Tutorial & Presets Demo](https://img.youtube.com/vi/sXtFZuuaZ8I/0.jpg)](https://youtu.be/sXtFZuuaZ8I "DIY Teensy Arcade Synth | Tutorial & Presets Demo")
 
-https://youtu.be/sXtFZuuaZ8I?si=uku8ubKHjdsXcVE_
-
 3-layer polyphonic synthesizer made with Teensy using arcade buttons, encoder &amp; LCD screen all stuffed into a cigar box.
